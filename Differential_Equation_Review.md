@@ -325,9 +325,14 @@ Well in hindsight, what we could have noticed is that if $x \in (0,1)$, then we 
 
 The function $\arccos(x)$ gives us the angle of the right angle triangle between the $x$-axis and the point on the circle. We know that $\sin$ of that angle gives us the other side. Summing the squares of both sides gives us the hypotenuse, which in this case is *always* $1$ since the triangle is on the unit circle. 
 
-
+Now a genius, I guess, could have seen it from the beginning. But for the rest of us mortals, the trig trick should be cool enough!
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
 
 > **<u>Exercise:</u>** 
+
+
 
 **<u>Sidenote:</u>** Since to solve the 1st order ODEs we integrated, this term has stuck for when solving other differential equations in general. When a physicist tells you to *'integrate a Differential Equation'* they most likely mean to solve it. 
 
