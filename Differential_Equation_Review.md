@@ -52,8 +52,6 @@ to denote the differential operator.
    L = \sum_{k=0}^n x^k \frac{d^k}{dx^k}.
    $$
 
-5. 
-
 
 
 Ok cool, so now we can write operators. Here are some cool constructions that are super useful.
@@ -741,9 +739,8 @@ $$
 
 
 
-  
 
- 
+
 
 
 
