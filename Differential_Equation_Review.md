@@ -666,8 +666,7 @@ A partial differential equation is a differential equation with more than one va
    $$
    L = \Delta - \frac{\partial}{\partial t}.
    $$
-
-5. 
+   
 
 There are so much more that we will discuss, but the main focus of this part is to introduce main techniques by which we use to solve differential equations posed using these operators.
 
@@ -734,11 +733,161 @@ $$
 
 
 
+> **<u>Exercise:</u>** Find the general solution of the 2-dimensional wave equation given by
+> $$
+> \Box u = 0 \iff -\frac{1}{c^2}\frac{\partial^2 u}{\partial t^2} + \frac{\partial^2 u}{\partial x^2} = 0.
+> $$
+> Why do we call the constant $c$ the "speed" of the wave $u$?
 
 
 
+## Fourier Transforms
+
+While we will explore the concept of the Fourier transform in more detail at another stage, in practice it finds excellent applications in  solving partial differential equations. Here is the quickest introduction I can possibly think to the Fourier transform.
+
+It all starts with an incredible observation called Fourier's Equality.
+
+**<u>Theorem:</u>** *(Fourier's Equality)* For any function $f : \mathbb R \to \mathbb R$ such that
+$$
+\int_{-\infty}^\infty |f(x)|^2 dx < \infty,
+$$
+Then the following equality holds for any $x \in \mathbb R$
+$$
+f(x) = \underbrace{\frac{1}{2\pi}\int_{-\infty}^\infty d\omega\, e^{-i\omega x}\underbrace{\int_{-\infty}^\infty dy\, e^{i\omega y} f(y)}_{\text{Fourier Transform}}}_{\text{Inverse Fourier Transform}}.
+$$
 
 
+This equality looks INSANE! There are all the crazy players. Integrals over infinite internals, complex numbers, even $\pi$ for crying out-loud. If you ignore the markings in the underbraces, this identity looks crazy because after all this weird integration of $f$ we end up getting back itself! 
+
+There is a beautiful geometric intuition that you can find explained [here](https://www.youtube.com/watch?v=spUNpyF58BY), or during recitation. But for now we will use this amazing fact to chop it up as seen in the underbraces to define the Fourier transform, as the inner integral, and the inverse Fourier transform as the outer integral.
+
+
+
+ **<u>Definition:</u>** The **Fourier transform** of a function $f:\mathbb R\to \mathbb R$ is a function $\hat f : \mathbb R \to \mathbb C$ given by
+$$
+\hat f(\omega) = \mathcal F[f](\omega) = \int_{-\infty}^{\infty} f(x)e^{i\omega x} dx.
+$$
+The **inverse Fourier transform** is given by
+$$
+f(x) = \mathcal F^{-1}[\hat f](x) = \frac{1}{2\pi} \int_{-\infty}^\infty f(\omega) e^{-i\omega x} d\omega.
+$$
+
+> **<u>Exercise:</u>** Calculate the Fourier transform, and inverse Fourier transform of
+> $$
+> f(x) = e^{-\frac{x^2}{2 \sigma}},
+> $$
+> for $\sigma > 0$.
+>
+> *Hint:* Recall that 
+> $$
+> \int_{-\infty}^{\infty} e^{-\frac{x^2}{2\sigma}} dx = \sqrt{2\pi \sigma}.
+> $$
+> How can you use this fact to calculate this very similar integral?
+
+
+
+Ok, but so what? We are doing PDEs. The cool thing about the Fourier transform is, in fact, the integral sign! From Calculus 0.5 we have learned that integrals cancel out derivatives. And arguably the hardest part of a differential equation is the fact that it has derivatives. So what if we could use the integral of the Fourier transform to help us get rid of the Derivatives? Then we are just left with equations!
+
+Let's see how to do this.
+
+**<u>Proposition:</u>** The Fourier transform of the derivative is given by
+$$
+\mathcal F \left[\frac{df}{dx}\right](\omega) = -i\omega \mathcal F[f](\omega).
+$$
+Or in other words (by taking the inverse Fourier transform on both sides)
+$$
+\frac{df}{dx} = \mathcal F^{-1} \left[-i\omega \hat f(\omega)\right].
+$$
+***Proof:*** This is a result of the fact that a Fourier transform involves an integral. In particular here it is:
+$$
+\mathcal F \left[\frac{df}{dx}\right](\omega) = \int_{-\infty}^\infty \frac{df}{dx} e^{i\omega x} dx.
+$$
+We can use integration by parts to obtain
+$$
+\begin{align*}
+\int_{-\infty}^\infty \frac{df}{dx} e^{i\omega x} dx 
+&= \cancelto{0}{[f(x)e^{i\omega xx}]_{-\infty}^\infty} - i\omega\int_{-\infty}^\infty f(x) e^{i\omega x} dx\\
+&= -i\omega \hat f(\omega).
+\end{align*}
+$$
+The reason why the first term is zero, is because in order for the Fourier transform to exist, Fourier's Identity must hold, which holds only if
+$$
+\int_{-\infty}^\infty |f(x)|^2 dx < \infty.
+$$
+This implies that for really large $x\to \pm \infty$, $f(x) \to 0$ otherwise that integral would not be finite. So we have proved it!
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
+OMGOMGOMGOMGOMG! Check this out!
+
+**<u>Example:</u>** Say that we have the following equation
+$$
+\frac{\partial u}{\partial t} - \frac{\partial^2 u}{\partial x^2} = e^{-x^2/2 - t}.
+$$
+We can write $u$ as its inverse Fourier transform of its Fourier transform in the $x$ variable like so
+$$
+u = \mathcal F^{-1}[\hat u].
+$$
+But we know that
+$$
+\frac{\partial u}{\partial x} = \mathcal F^{-1} \left[-i\omega \hat u(\omega)\right].
+$$
+ By applying this property twice we get that
+$$
+\frac{\partial^2 u}{\partial^2 x} = \mathcal F^{-1} \left[-\omega^2 \hat u(\omega)\right].
+$$
+And since $t$ has nothing to do with the Fourier transform in $x$ we can see that
+$$
+\frac{\partial u}{\partial t} = \mathcal F^{-1} \left[\frac{\partial \hat u}{\partial t}\right].
+$$
+Therefore we can write the left hand side of the equation as
+$$
+\frac{\partial u}{\partial t} - \frac{\partial^2 u}{\partial x^2} = \mathcal F^{-1} \left[\frac{\partial \hat u}{\partial t}\right] -\mathcal F^{-1} \left[-\omega^2 \hat u(\omega)\right] = \mathcal F^{-1} \left[\frac{\partial \hat u}{\partial t}+\omega^2 \hat u(\omega)\right].
+$$
+OMG and now if we take the Fourier transform on both sides (using the exercise above) we get
+$$
+\frac{\partial \hat u}{\partial t}+\omega^2 \hat u= e^{-t}\mathcal F[e^{-x^2/2}] = \sqrt{2\pi} e^{-t - \frac{\omega^2}{2}}.
+$$
+Which is first order **ODE** for $\hat u$! Which we can solve by integrating factors! (It becomes a bit tedious from here, but isn't that amazing!?)
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
+In the previous example, we have seen how to take a Fourier transform to get rid of the derivatives of a PDE entirely and reduce it to an ODE of the Fourier transform. At the end of the day, all we need to do to extract the solution after we have the Fourier transform, is to take the inverse Fourier transform back!
+
+**<u>Example:</u>** *(A Complete Example on the Wave Equation)* The wave equation in 2 dimensions is given by
+$$
+\Box u = 0 \iff -\frac{1}{c^2}\frac{\partial^2 u}{\partial t^2} + \frac{\partial^2 u}{\partial x^2} = 0,
+$$
+for some constant $c>0$ that we usually set to 1. 
+
+> **<u>Exercise:</u>** Another way to describe a wave is a function whose "curvature in space" is equal to its "curvature in time." Why is this wordy description identical to the wave equation? Why is it a good condition for describing wavey objects? What is the most messed up wave you can come up with?
+
+We can calculate something really fundamental about the waves. Their frequency! We can think of a Fourier transform as a way to extract how much of each Frequency's sinusoid I should add in order to reconstruct the original function. Therefore, if the Fourier transform has a high value at some $\omega$ then the actual function must have a lot of this frequency in it.
+
+In this case we have two variables $t,x$. We could take a Fourier transform in either one. One would give us a conjugate variable for time, which would be a temporal frequency $\omega$, or just frequency, while the other would give us a conjugate variable for space, which would be a spatial frequency $k$. 
+
+Wouldn't it be interesting to see how our equation relates the wave's spatial frequency with the wave's time frequency? This is called a **dispersion relation**. We can find that using the Fourier transform!
+
+We first take the Fourier transform in $x$ to obtain
+$$
+-\frac{1}{c^2}\frac{\partial^2 \hat u(t,k)}{\partial t^2} -  k^2 \hat u(t,k) = 0.
+$$
+This gets rid of the spatial derivative. To get rid of the time derivative we will take a Fourier transform in time to obtain
+$$
+\left(\frac{\omega^2}{c^2} - k^2\right)\hat u(\omega,k) = 0
+$$
+This implies that $\hat u(\omega, k) = 0 $ for **almost all** pairs of $\omega $ and $k$. The places where $\hat u$ can be anything else while still satisfying the equation is when the parenthesis at the start vanishes! In other words the only combinations of spatial and time frequencies that contribute to a wave must satisfy
+$$
+\omega = ck\ \text{ or }\ \omega = -ck.
+$$
+Which is the traditional relationship between the wavelength and frequency we have seen in Physics 1! If you want to be explicit, set
+$$
+\omega = 2\pi f \text{ and } k = \frac{2\pi}{\lambda}.
+$$
+
+> **<u>Exercise:</u>** What does it mean for either $\omega, k$ to be negative? Is this a physical solution?
+>
+> *Hint:* Yes.
 
 
 
