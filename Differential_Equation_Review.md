@@ -271,7 +271,7 @@ for some $C\in \mathbb R$.
 
 > **Exercise:** Solve the following ODE
 > $$
-> \sin(x)\frac{df}{dx} - \cos(x) f =  \cos (x)
+> \sin(x)\frac{df}{dx} + \cos(x) f =  \cos (x)
 > $$
 > *Hint:* Consider the solution of $fg'+gf' = h$ for some known functions $g,h \in C^\infty(\mathbb R)$. 
 
@@ -406,7 +406,7 @@ $$
 
 > **<u>Exercise:</u>**  Solve the following super ugly ODE
 > $$
-> \frac{df}{dx} = \frac{1}{x+\cos f}.
+> \frac{df}{dx} = \frac{1}{x+e^{2f}}.
 > $$
 > *Hint:* What can you do to make the fraction not a fraction?
 
