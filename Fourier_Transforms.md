@@ -207,14 +207,44 @@ $$
 \mathcal F[f](\omega) = \hat f(\omega) = \int_{-\infty}^\infty f(x)e^{i\omega x} dx.
 $$
 
+Then we can see that there is an inverse of this map.  
+
+**<u>Theorem:</u>** *(Inverse Fourier Transform)* The fourier transform is skew involutive, i.e. the **inverse fourier transform** is given by
+$$
+\mathcal F^{-1}[\hat f](x) = \frac{1}{2\pi}\int_{-\infty}^\infty e^{-i\omega x} \hat f(\omega) d\omega = f(x).
+$$
+
+
+Now that we have both, of them we can move on to discover some properties.
 
 
 
+## Properties
+
+Here is a collection of properties of the Fourier transform.
+
+**<u>Proposition:</u>** *(Fourier transform properties)* Let $f,g \in L^2$ be square integrable functions and $a,b \in \mathbb R$ be constants. Then the Fourier transform has the following properties.
+
+1. **Linearity:** $\mathcal F[af + b g] = a\hat f + b\hat g$. 
+2. **Translation:** $\mathcal F[f(x-a)](\omega)= e^{-ia\omega}\hat f(\omega)$
+3. **Scaling:** $\mathcal F[f(ax)](\omega) = \frac{1}{|a|}\hat f\left(\frac{\omega}{a}\right)$
+4. **Zero Component:** $\hat f(0) = \int_{-\infty}^\infty f(x) dx$.
+5. **Product:** $\mathcal F[f\ast g] = \hat f \hat g$.
+6. 
+
+where $f\ast g$ is the convolution given by 
+$$
+f\ast g(x) = \int_{-\infty}^\infty f(x-y)g(y)\, dy.
+$$
+***Proof:*** Hell no! Check out [Wikipedia](https://en.wikipedia.org/wiki/Fourier_transform#Properties_of_the_Fourier_transform).
+$$
+\begin{equation}\tag*{$\Box$}\end{equation}
+$$
 
 
+# Applications in Quantum Mechanics
 
-
-
+TBD I don’t have time now! 
 
 
 
